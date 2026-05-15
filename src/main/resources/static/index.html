@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>RESTAUNI - RESTAURANTE UNIVERSITARIO</title>
+    <h1>Menu Restuani</h1>    
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 40px; }
+        .container { background-color: #1e1e1e; padding: 30px; border-radius: 15px; width: 90%; max-width: 800px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #333; }
+        h1 { color: #bb86fc; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+        .btn-refresh { background-color: #03dac6; color: #000; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom: 20px; transition: 0.3s; width: 100%; }
+        .btn-refresh:hover { background-color: #018786; transform: scale(1.02); }
+        #lista-platos { margin-top: 20px; }
+        .plato-card { background-color: #2c2c2c; margin-bottom: 15px; padding: 20px; border-radius: 10px; border-left: 6px solid #bb86fc; transition: 0.2s; }
+        .plato-card:hover { transform: translateX(10px); background-color: #333; }
+        .plato-header { display: flex; justify-content: space-between; align-items: center; }
+        .plato-header h3 { margin: 0; color: #bb86fc; }
+        .precio { color: #03dac6; font-size: 1.3em; font-weight: bold; }
+        .descripcion { color: #b0b0b0; font-style: italic; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>RESTAUNI - Menú</h2>
+    
+    <div class="container">
+        <button class="btn-refresh" onclick="cargarMenu()">🔄 ACTUALIZAR LISTADO</button>
+        
+        <div id="lista-platos">
+            </div>
+    </div>
+
+    <script>
+        function cargarMenu() {
+            fetch('/platos')
+                .then(response => response.json())
+                .then(data => {
+                    const contenedor = document.getElementById('lista-platos');
+                    contenedor.innerHTML = ''; 
+                    
+                    if(data.length === 0) {
+                        contenedor.innerHTML = '<p style="text-align:center">El menú está vacío. Cargá algo desde la terminal.</p>';
+                        return;
+                    }
+
+                    data.forEach(plato => {
+                        contenedor.innerHTML += `
+                            <div class="plato-card">
+                                <div class="plato-header">
+                                    <h3>${plato.nombre} <small>(#${plato.numeroPlato})</small></h3>
+                                    <span class="precio">$${plato.precio}</span>
+                                </div>
+                                <p class="descripcion">${plato.descripcion}</p>
+                            </div>
+                        `;
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        // Carga automática al abrir
+        window.onload = cargarMenu;
+    </script>
+</body>
+</html>
