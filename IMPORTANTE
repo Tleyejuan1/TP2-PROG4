@@ -1,0 +1,9 @@
+SOBRE EL FUNCIONAMIENTO DEL SISTEMA:
+Paso 1: Abrir el proyecto. Importá la carpeta en IntelliJ IDEA o VS code
+Paso 2: Ejecutar la aplicación. Buscá la clase OdontologiaApplication.javaen la raíz del paquete y dale a Run .
+
+Paso 3: Abrir el navegador e ingresará a la siguiente dirección: 👉http://localhost:8081/menu.html
+
+Paso 4: Carga de datos. Utilice el formulario para registrar pacientes. Recordá que la fecha de nacimiento es clave para que funcione el filtro de menores de 18 años.
+
+Paso 5: Consultas. Utilice los botones de "Ver Todos" o "Ver Menores" para visualizar los resultados que se guardan en la memoria del programa.
