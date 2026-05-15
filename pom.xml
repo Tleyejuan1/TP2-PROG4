@@ -9,10 +9,10 @@
 		<relativePath/> 
 	</parent>
 	<groupId>com.utn</groupId>
-	<artifactId>restaurante</artifactId>
+	<artifactId>odontologia</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>restaurante</name>
-	<description>TP 1 Programación IV UTN Villa María</description>
+	<description>TP 2 Programación IV UTN Villa María</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Odontológico UTN</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 600px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin: auto; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; color: white; margin-right: 10px; }
+        .btn-save { background: #28a745; }
+        .btn-list { background: #007bff; }
+        .btn-minors { background: #dc3545; }
+        #resultado { margin-top: 20px; background: #eee; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sistema de Gestion Odontológico</h1>
+        <p>Desarrollado por Juan Tleye</p>
+        <h2>Registrar Paciente</h2>
+        <input type="number" id="id" placeholder="ID">
+        <input type="text" id="dni" placeholder="DNI">
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="text" id="apellido" placeholder="Apellido">
+        <input type="date" id="fechaNac">
+        <button onclick="registrar()" class="btn-save">Guardar</button>
+        <hr>
+        <button onclick="listar('/pacientes')" class="btn-list">Ver Todos</button>
+        <button onclick="listar('/pacientes/menores')" class="btn-minors">Ver Menores</button>
+        <div id="resultado">Los resultados aparecerán aquí...</div>
+    </div>
+
+    <script>
+        async function registrar() {
+            const pac = {
+                id: document.getElementById('id').value,
+                dni: document.getElementById('dni').value,
+                nombre: document.getElementById('nombre').value,
+                apellido: document.getElementById('apellido').value,
+                fechaNacimiento: document.getElementById('fechaNac').value
+            };
+            const res = await fetch('/pacientes', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(pac)
+            });
+            alert(await res.text());
+        }
+
+        async function listar(url) {
+            const res = await fetch(url);
+            const data = await res.json();
+            document.getElementById('resultado').innerHTML = data.length > 0 ? 
+                data.map(p => `<p>• ${p.nombre} ${p.apellido} (${p.fechaNacimiento})</p>`).join('') : 
+                "No hay pacientes.";
+        }
+    </script>
+</body>
+</html>
